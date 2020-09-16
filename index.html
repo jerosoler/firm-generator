@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Firm generator! ;) </title>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- import JavaScript -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <style>
+
+  </style>
+</head>
+<body>
+  <div id="app">
+
+    <el-input placeholder="Nombre + Apellido" v-model="nombre" style="width: 200px;"></el-input>
+    <el-input placeholder="Cargo" v-model="carreg" style="width: 200px;"></el-input>
+    <el-input placeholder="Tel" v-model="tel" style="width: 200px;"></el-input>
+    <el-input placeholder="Dirección" v-model="direccion" style="width: 200px;"></el-input>
+    <el-input placeholder="CP + Población" v-model="direccion2" style="width: 200px;"></el-input>
+    <br><br>
+
+
+    <br style="clear:both;"><br>
+
+    <el-row :gutter="20">
+
+      <el-col :span="16"><el-input placeholder="Archivo" v-model="archivo" style="width: 200px;"></el-input>
+      <el-button type="success" @click="download()">Descargar</el-button></el-col>
+    </el-row>
+
+
+    <hr>
+    <div id="firma">
+    <html>
+      <body>
+
+        <div class="firma">
+        <b>{{nombre}}</b><br>
+        {{carreg}}<br>
+        <br>
+        T. {{tel}}<br>
+        {{direccion}}<br>
+        {{direccion2}}<br>
+
+        <br><br>
+
+
+
+        </div>
+      </body>
+    </html>
+    </div>
+  </div>
+
+
+
+<script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    nombre: "",
+    carreg: "",
+    tel: "",
+    direccion: "",
+    direccion2: "",
+    archivo: "Firma_",
+
+  },
+  methods: {
+    download(){
+      var firmabody = document.getElementById("firma");
+      firmabody = firmabody.innerHTML;
+      var firmaheader = `<html><body><style>
+
+      </style>`;
+      var firmafooter = "</body></html>";
+      var firma = firmaheader + firmabody + firmafooter
+
+      var element = document.createElement('a');
+
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(firma));
+      element.setAttribute('download', this.archivo +'.html');
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
+    },
+
+  },
+
+})
+</script>
+<style>
+
+</style>
+</body>
+</html>
